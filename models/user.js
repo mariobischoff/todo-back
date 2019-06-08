@@ -31,10 +31,9 @@ module.exports = app => {
         }
         cb(false, data)
       })
-
     },
     // Atualizar usuário
-    update: (params, user) => {
+    update: (params, user, cb) => {
       User.findOneAndUpdate(params, user, (err, data) => {
         if (err) {
           cb(err)
@@ -44,7 +43,7 @@ module.exports = app => {
       })
     },
     // Excluir usuário
-    delete: (params) => {
+    delete: (params, cb) => {
       User.remove(params, (err, data) => {
         if (err) {
           cb(err)

@@ -8,6 +8,14 @@ module.exports = app => {
     app.controllers.user.save(req, res)
   })
   /**
+   * ROUTE: /user/login
+   * VERB: POST
+   * PUBLIC: true
+   */
+  app.post('/user/login', (req, res) => {
+    app.controllers.user.login(req, res)
+  })
+  /**
    * ROUTE: /user/id?
    * VERB: GET
    * PUBLIC: false
@@ -20,15 +28,15 @@ module.exports = app => {
    * VERB: PUT
    * PUBLIC: false
    */
-  app.put('user/:id', (req, res) => {
-
+  app.put('/user/:id', (req, res) => {
+    app.controllers.user.update(req, res)
   })
   /**
    * ROUTE: /user/id
    * VERB: DELETE
    * PUBLIC: false
    */
-  app.delete('user/:id', (req, res) => {
-
+  app.delete('/user/:id', (req, res) => {
+    app.controllers.user.delete(req, res)
   })
 }

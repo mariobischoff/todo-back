@@ -1,8 +1,5 @@
 import bcrypt from 'bcrypt'
-<<<<<<< HEAD
-import User from '../schemas/user'
-=======
->>>>>>> 1940528ff63150d8079fd009e3a4fbb976c1f251
+import jwt from 'jsonwebtoken'
 
 module.exports = app => {
   return {
@@ -33,17 +30,38 @@ module.exports = app => {
         })
       })
     },
-    update: () => {
-      // verificar campos obrigatorios
+    login: (req, res) => {
+      // verificar se os campos foram digitados
+      // verificar se existe o email cadastrado
+      // verificar senha
+    },
+    update: (req, res) => {
       // verificar parametro
-      // verificar token
+      if (!req.params.id) {
+        res.status(400).send('Falta o parâmentro')
+        return
+      }
+      // verificar campos obrigatorios
+      if (!req.body) {
+        res.status(400).send('Envie os dados que desejaalterar')
+        return
+      }
       // importar o model
+      app.models.user.update({ _id: req.params.id }, req.body, (err, data) => {
+        if (err) {
+          res.status(400).send('Erro: ' + err)
+          return
+        }
+        res.json(data)
+        return
+      })
+      // verificar token
     },
     list: (req, res) => {
       // verificar se foi passado parametro
       if (req.params.id) {
         // importar model        
-        app.models.user.getOne({_id: req.params.id}, (err, data) => {
+        app.models.user.getOne({ _id: req.params.id }, (err, data) => {
           if (err) {
             res.status(400).send('Erro: ' + err)
             return
@@ -51,9 +69,10 @@ module.exports = app => {
           res.json(data)
           return
         })
+      } else {
         // importar model
         app.models.user.getAll((err, data) => {
-          if (err) {
+          if (err) {  
             res.status(400).send('Erro: ' + err)
             return
           }
@@ -63,10 +82,15 @@ module.exports = app => {
       }
       // verificar token
     },
-    delete: () => {
+    delete: (req, res) => {
       // verificar parametro
-      // verificar token
+      if (!req.params.id) {
+        res.status(400).send('Falta o parâmentro')
+        return
+      }
       // importar model
+      app.models.user.delete({ _id: req.params.id })
+      // verificar token
     }
   }
 }
