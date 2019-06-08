@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt'
+<<<<<<< HEAD
 import User from '../schemas/user'
+=======
+>>>>>>> 1940528ff63150d8079fd009e3a4fbb976c1f251
 
 module.exports = app => {
   return {
