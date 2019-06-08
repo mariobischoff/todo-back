@@ -5,7 +5,7 @@ module.exports = app => {
    * PUBLIC: true
    */
   app.post('/user/register', (req, res) => {
-
+    app.controllers.user.save(req, res)
   })
   /**
    * ROUTE: /user/id?
@@ -13,7 +13,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.get('/user/:id?', (req, res) => {
-
+    app.controllers.user.list(req, res)
   })
   /**
    * ROUTE: /user/id

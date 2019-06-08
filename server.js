@@ -1,9 +1,10 @@
 import express from 'express'
 import consign from 'consign'
 import logger from 'morgan'
-import mongoose from 'mongoose'
+import db from './database'
+import define from './define'
 
-mongoose.connect('mongodb://localhost:27017/todo', {useNewUrlParser: true})
+db
 
 const PORT = process.env.PORT || 3000
 const app = express()
@@ -18,5 +19,5 @@ consign()
   .into(app)
 
 app.listen(PORT, () => {
-  console.log(`Server running at ${PORT}.`)
+  console.log(`Server running at ${define.APP_PORT}.`)
 })
