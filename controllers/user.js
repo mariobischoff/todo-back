@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import define from '../define'
 
 module.exports = app => {
   return {
@@ -31,8 +32,27 @@ module.exports = app => {
       })
     },
     login: (req, res) => {
-      // verificar se os campos foram digitados
+      // verificar se os campos foram preenchidos
+      if (!req.body.email || !req.body.password) {
+        res.status(401).send('Falta dados')
+      }
       // verificar se existe o email cadastrado
+      app.models.user.getOne({ email: req.body.email }, (err, data) => {
+        if (err) {
+          res.send('Erro: ' + err)
+          return
+        }
+        bcrypt.compare(req.body.password, data.password, (err, same) => {
+          if (err) {
+            res.status(400).send('Senha invalida')
+            return
+          }
+          if (same) {
+            const token = jwt.sign({ _id: data._id }, define.SHA)
+            res.status(200).send({ auth: true, token })
+          }
+        })
+      })
       // verificar senha
     },
     update: (req, res) => {
@@ -43,7 +63,7 @@ module.exports = app => {
       }
       // verificar campos obrigatorios
       if (!req.body) {
-        res.status(400).send('Envie os dados que desejaalterar')
+        res.status(400).send('Envie os dados que deseja alterar')
         return
       }
       // importar o model
