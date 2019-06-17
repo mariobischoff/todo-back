@@ -1,3 +1,5 @@
+import { verifyToken } from '../middleware/auth'
+
 module.exports = app => {
   /**
    * ROUTE: /user/register
@@ -20,7 +22,7 @@ module.exports = app => {
    * VERB: GET
    * PUBLIC: false
    */
-  app.get('/user/:id?', (req, res) => {
+  app.get('/user/:id?', verifyToken, (req, res) => {
     app.controllers.user.list(req, res)
   })
   /**
@@ -28,7 +30,7 @@ module.exports = app => {
    * VERB: PUT
    * PUBLIC: false
    */
-  app.put('/user/:id', (req, res) => {
+  app.put('/user/:id', verifyToken, (req, res) => {
     app.controllers.user.update(req, res)
   })
   /**
@@ -36,7 +38,7 @@ module.exports = app => {
    * VERB: DELETE
    * PUBLIC: false
    */
-  app.delete('/user/:id', (req, res) => {
+  app.delete('/user/:id', verifyToken, (req, res) => {
     app.controllers.user.delete(req, res)
   })
 }

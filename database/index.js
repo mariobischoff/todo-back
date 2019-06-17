@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import define from '../define'
 
-mongoose.connect(define.MONGO_URL2, { useNewUrlParser: true, useCreateIndex: true })
+mongoose.connect(define.MONGO_URL, { useNewUrlParser: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
