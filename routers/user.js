@@ -24,6 +24,7 @@ module.exports = app => {
    */
   app.get('/user/:id?', verifyToken, (req, res) => {
     app.controllers.user.list(req, res)
+    console.log(res.locals.id)
   })
   /**
    * ROUTE: /user/id

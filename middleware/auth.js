@@ -13,6 +13,7 @@ module.exports = {
         res.status(401).send('Token invalid')
         return
       }
+      res.locals.id = decoded._id
       next()
     })
   }
