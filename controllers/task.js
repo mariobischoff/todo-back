@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-
 module.exports = app => {
   return {
     save: (req, res) => {
@@ -8,6 +6,7 @@ module.exports = app => {
         return
       }
       const task = { title: req.body.title, description: req.body.description, createdAt: Date.now() }
+      console.log(res.locals.id)
       app.models.task.addTask({ _id: res.locals.id }, task, (err, data) => {
         if (err) {
           res.status(401).send('Erro: ' + err)
@@ -15,6 +14,23 @@ module.exports = app => {
         }
         res.json(data)
       })
+    },
+    list: (req, res) => {
+      if (req.params.id) {
+        app.models.task.getOne({ _id: res.locals.id }, { idTask: req.params.id }, (err, data) => {
+          if (err) {
+            return res.status(400).send('Erro: ' + err)
+          }
+          return res.json(data)
+        })
+      } else {
+        app.models.task.getAll({ _id: res.locals.id }, (err, data) => {
+          if (err) {
+            return res.status(400).send('Erro: ' + err)
+          }
+          return res.json(data)
+        })
+      }
     }
   }
 }

@@ -8,8 +8,8 @@ module.exports = app => {
   app.post('/task', verifyToken, (req, res) => {
     app.controllers.task.save(req, res)
   })
-  app.get('/task/:id?', (req, res) => {
-
+  app.get('/task/:id?', verifyToken, (req, res) => {
+    app.controllers.task.list(req, res)
   })
   app.put('/task/:id', (req, res) => {
 

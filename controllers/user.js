@@ -42,18 +42,19 @@ module.exports = app => {
           res.send('Erro: ' + err)
           return
         }
+        // verificar senha
         bcrypt.compare(req.body.password, data.password, (err, same) => {
           if (err) {
             res.status(400).send('Senha invalida')
             return
           }
           if (same) {
-            const token = jwt.sign({ _id: data._id }, define.SHA)
+            // gera o token
+            const token = jwt.sign({ sub: data._id }, define.SHA)
             res.status(200).send({ auth: true, token })
           }
         })
       })
-      // verificar senha
     },
     update: (req, res) => {
       // verificar parametro
