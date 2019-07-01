@@ -35,6 +35,7 @@ module.exports = app => {
       // verificar se os campos foram preenchidos
       if (!req.body.email || !req.body.password) {
         res.status(401).send('Falta dados')
+        return
       }
       // verificar se existe o email cadastrado
       app.models.user.getOne({ email: req.body.email }, (err, data) => {

@@ -6,7 +6,6 @@ module.exports = app => {
         return
       }
       const task = { title: req.body.title, description: req.body.description, createdAt: Date.now() }
-      console.log(res.locals.id)
       app.models.task.addTask({ _id: res.locals.id }, task, (err, data) => {
         if (err) {
           res.status(401).send('Erro: ' + err)
@@ -31,6 +30,34 @@ module.exports = app => {
           return res.json(data)
         })
       }
+    },
+    update: (req, res) => {
+      if (!req.params.id) {
+        res.status(400).send('Falta o parâmetro')
+        return
+      }
+      if (!req.body) {
+        res.status(400).send('Envie os dados que deseja alterar')
+        return
+      }
+      app.models.task.update({ _id: res.locals.id }, req.params.id, req.body, (err, data) => {
+        if (err) {
+          return res.status(400).send('Erro: ' + err)
+        }
+        res.json(data)
+      })
+    },
+    delete: (req, res) => {
+      if (!req.params.id){
+        res.status(400).send('Falta o parâmetro')
+        return
+      }
+      app.models.task.delete({ _id: res.locals.id }, req.params.id, (err, data) => {
+        if (err) {
+          return res.status(400).send('Erro: ' + err)
+        }
+        res.json(data)
+      })
     }
   }
 }

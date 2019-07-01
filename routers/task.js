@@ -11,10 +11,10 @@ module.exports = app => {
   app.get('/task/:id?', verifyToken, (req, res) => {
     app.controllers.task.list(req, res)
   })
-  app.put('/task/:id', (req, res) => {
-
+  app.put('/task/:id', verifyToken, (req, res) => {
+    app.controllers.task.update(req, res)
   })
-  app.delete('/task/:id', (req, res) => {
-
+  app.delete('/task/:id', verifyToken, (req, res) => {
+    app.controllers.task.delete(req, res)
   })
 }
