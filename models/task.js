@@ -63,10 +63,18 @@ module.exports = app => {
       })
     },
     getOne: (params, idTask, cb) => {
-      User.findOne(params, (err, data) => {
+      User.findOne(params, (err, user) => {
         if (err) {
           return cb(err)
         }
+        let task = {}
+        user.tasks.filter((el, index, arr) => {
+          if (el._id == idTask) {
+            task = arr[index]
+            console.log(arr[index]);
+          }
+          console.log('fdddasdas');
+        })
         return cb(null, task)
       })
     },

@@ -1,4 +1,5 @@
 import { verifyToken } from '../middleware/auth'
+import { userCreateValidator, userLoginValidator } from '../validations/user'
 
 module.exports = app => {
   /**
@@ -6,7 +7,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: true
    */
-  app.post('/user/register', (req, res) => {
+  app.post('/user/register', userCreateValidator, (req, res) => {
     app.controllers.user.save(req, res)
   })
   /**
@@ -14,7 +15,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: true
    */
-  app.post('/user/login', (req, res) => {
+  app.post('/user/login', userLoginValidator, (req, res) => {
     app.controllers.user.login(req, res)
   })
   /**

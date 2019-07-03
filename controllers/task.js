@@ -18,18 +18,19 @@ module.exports = app => {
       if (req.params.id) {
         app.models.task.getOne({ _id: res.locals.id }, { idTask: req.params.id }, (err, data) => {
           if (err) {
-            return res.status(400).send('Erro: ' + err)
+            res.status(400).send('Erro: ' + err)
+            return
           }
-          return res.json(data)
-        })
-      } else {
-        app.models.task.getAll({ _id: res.locals.id }, (err, data) => {
-          if (err) {
-            return res.status(400).send('Erro: ' + err)
-          }
-          return res.json(data)
+          res.json(data)
+          return
         })
       }
+      app.models.task.getAll({ _id: res.locals.id }, (err, data) => {
+        if (err) {
+          return res.status(400).send('Erro: ' + err)
+        }
+        return res.json(data)
+      })
     },
     update: (req, res) => {
       if (!req.params.id) {
