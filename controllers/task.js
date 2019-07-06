@@ -16,7 +16,7 @@ module.exports = app => {
     },
     list: (req, res) => {
       if (req.params.id) {
-        app.models.task.getOne({ _id: res.locals.id }, { idTask: req.params.id }, (err, data) => {
+        app.models.task.getOne({ _id: res.locals.id }, req.params.id, (err, data) => {
           if (err) {
             res.status(400).send('Erro: ' + err)
             return
@@ -24,13 +24,14 @@ module.exports = app => {
           res.json(data)
           return
         })
+      } else {
+        app.models.task.getAll({ _id: res.locals.id }, (err, data) => {
+          if (err) {
+            return res.status(400).send('Erro: ' + err)
+          }
+          return res.json(data)
+        })
       }
-      app.models.task.getAll({ _id: res.locals.id }, (err, data) => {
-        if (err) {
-          return res.status(400).send('Erro: ' + err)
-        }
-        return res.json(data)
-      })
     },
     update: (req, res) => {
       if (!req.params.id) {

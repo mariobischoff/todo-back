@@ -18,6 +18,7 @@ module.exports = app => {
         })
       })
     },
+    // Atualiza tarefa
     update: (params, idTask, body, cb) => {
       User.findById(params, (err, data) => {
         if (err) {
@@ -42,6 +43,7 @@ module.exports = app => {
         })
       })
     },
+    // Remove tarefa
     delete: (params, idTask, cb) => {
       User.findById(params, (err, data) => {
         if (err) {
@@ -62,28 +64,26 @@ module.exports = app => {
         })
       })
     },
+    // Recupera uma tarefa
     getOne: (params, idTask, cb) => {
+      let task = null
       User.findOne(params, (err, user) => {
         if (err) {
           return cb(err)
         }
-        let task = {}
-        user.tasks.filter((el, index, arr) => {
-          if (el._id == idTask) {
-            task = arr[index]
-            console.log(arr[index]);
-          }
-          console.log('fdddasdas');
+        task = user.tasks.filter(task => {
+          return task._id == idTask
         })
-        return cb(null, task)
+        cb(null, task[0])
       })
     },
+    // Recupera todas as tarefas
     getAll: (params, cb) => {
       User.findOne(params, (err, data) => {
         if (err) {
           return cb(err)
         }
-        return cb(null, data.tasks)
+        cb(null, data.tasks)
       })
     }
   }
