@@ -46,13 +46,15 @@ module.exports = app => {
         // verificar senha
         bcrypt.compare(req.body.password, data.password, (err, same) => {
           if (err) {
-            res.status(400).send('Senha invalida')
+            res.status(400).send('Erro: ' + err)
             return
           }
           if (same) {
             // gera o token
-            const token = jwt.sign({ sub: data._id }, define.SHA)
-            res.status(200).send({ auth: true, token })
+            const token = jwt.sign({ sub: data._id }, define.SHA, { expiresIn: 60 * 60 })
+            res.status(200).send({ token })
+          } else {
+            res.status(400).send('Senha invalida')
           }
         })
       })
@@ -111,8 +113,14 @@ module.exports = app => {
         return
       }
       // importar model
-      app.models.user.delete({ _id: req.params.id })
-      // verificar token
+      app.models.user.delete({ _id: req.params.id }, (err, data) => {
+        if (err) {
+          res.status(400).send('Erro: ' + err)
+          return
+        }
+        res.json(data)
+        return
+      })
     }
   }
 }

@@ -1,5 +1,6 @@
 import { verifyToken } from '../middleware/auth'
-import { taskCreateValidator, taskFindId } from '../validations/task'
+import { idOptionalValidator, idValidator, tokenValidator } from '../validations/user'
+import { taskCreateValidator, taskAlterValidator } from '../validations/task'
 
 module.exports = app => {
   /**
@@ -7,7 +8,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: false
    */
-  app.post('/task', taskCreateValidator, verifyToken, (req, res) => {
+  app.post('/task', tokenValidator, taskCreateValidator, verifyToken, (req, res) => {
     app.controllers.task.save(req, res)
   })
   /**
@@ -15,7 +16,7 @@ module.exports = app => {
    * VERB: GET
    * PUBLIC: false
    */
-  app.get('/task/:id?', verifyToken, (req, res) => {
+  app.get('/task/:id?', tokenValidator, idOptionalValidator, verifyToken, (req, res) => {
     app.controllers.task.list(req, res)
   })
   /**
@@ -23,7 +24,7 @@ module.exports = app => {
    * VERB: PUT
    * PUBLIC: false
    */
-  app.put('/task/:id', verifyToken, (req, res) => {
+  app.put('/task/:id', tokenValidator, idValidator, taskAlterValidator, verifyToken, (req, res) => {
     app.controllers.task.update(req, res)
   })
   /**
@@ -31,7 +32,7 @@ module.exports = app => {
    * VERB: DELETE
    * PUBLIC: false
    */
-  app.delete('/task/:id', verifyToken, (req, res) => {
+  app.delete('/task/:id', tokenValidator, idValidator, verifyToken, (req, res) => {
     app.controllers.task.delete(req, res)
   })
 }

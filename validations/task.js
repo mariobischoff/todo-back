@@ -1,4 +1,7 @@
 import { celebrate, Joi } from 'celebrate'
+import objectId from 'joi-objectid'
+
+Joi.objectId = objectId(Joi)
 
 module.exports = {
   taskCreateValidator: celebrate({
@@ -7,9 +10,10 @@ module.exports = {
       description: Joi.string().required()
     })
   }),
-  taskFindId: celebrate({
-    params: {
-      id: Joi.string().regex(/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/).optional()
-    }
+  taskAlterValidator: celebrate({
+    body: Joi.object().keys({
+      title: Joi.string().optional(),
+      description: Joi.string().optional()
+    })
   })
 }
