@@ -4,7 +4,7 @@ module.exports = {
   userCreateValidator: celebrate({
     body: Joi.object().keys({
       name: Joi.string().required(),
-      email: Joi.string().email().required(),
+      email: Joi.string().email().trim().required(),
       password: Joi.string().alphanum().min(4).max(12).required(),
       repassword: Joi.string().alphanum().min(4).max(12).required()
     })
