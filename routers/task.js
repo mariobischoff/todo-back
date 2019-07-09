@@ -16,7 +16,7 @@ module.exports = app => {
    * VERB: GET
    * PUBLIC: false
    */
-  app.get('/task/:id?', tokenValidator, idOptionalValidator, verifyToken, (req, res) => {
+  app.get('/task/:id?', verifyToken, (req, res) => {
     app.controllers.task.list(req, res)
   })
   /**
