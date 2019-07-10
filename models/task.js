@@ -74,16 +74,17 @@ module.exports = app => {
         task = user.tasks.filter(task => {
           return task._id == idTask
         })
-        cb(null, task[0])
+        user.tasks = task
+        cb(null, user)
       })
     },
     // Recupera todas as tarefas
     getAll: (params, cb) => {
-      User.findOne(params, (err, data) => {
+      User.findOne(params, (err, user) => {
         if (err) {
           return cb(err)
         }
-        cb(null, data.tasks)
+        cb(null, user)
       })
     }
   }

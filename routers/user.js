@@ -15,7 +15,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: true
    */
-  app.post('/user/login', (req, res) => {
+  app.post('/user/login', userLoginValidator, (req, res) => {
     app.controllers.user.login(req, res)
   })
   /**
