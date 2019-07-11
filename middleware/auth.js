@@ -3,7 +3,6 @@ import define from '../define'
 
 module.exports = {
   verifyToken: (req, res, next) => {
-    console.log(req.headers.authorization)
     if (!req.headers.authorization) {
       res.status(400).send('Missing token')
       return

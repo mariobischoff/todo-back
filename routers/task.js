@@ -8,7 +8,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: false
    */
-  app.post('/task', tokenValidator, taskCreateValidator, verifyToken, (req, res) => {
+  app.post('/task', taskCreateValidator, verifyToken, (req, res) => {
     app.controllers.task.save(req, res)
   })
   /**

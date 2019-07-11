@@ -8,7 +8,7 @@ module.exports = {
     body: Joi.object().keys({
       title: Joi.string().required(),
       description: Joi.string().required()
-    })
+    }).unknown()
   }),
   taskAlterValidator: celebrate({
     body: Joi.object().keys({
