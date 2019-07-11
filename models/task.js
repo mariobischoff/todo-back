@@ -10,7 +10,7 @@ module.exports = app => {
           return cb(err)
         }
         data.tasks.push(task)
-        User.findOneAndUpdate(params, { tasks: data.tasks }, (err, result) => {
+        User.findOneAndUpdate(params, { tasks: data.tasks }, { new: true }, (err, result) => {
           if (err) {
             return cb(err)
           }
@@ -34,7 +34,7 @@ module.exports = app => {
             task.description = body.description
           }
         })
-        User.findOneAndUpdate(params, { tasks: data.tasks }, (err, data) => {
+        User.findOneAndUpdate(params, { tasks: data.tasks }, { new: true }, (err, data) => {
           if (err) {
             cb(err)
             return
@@ -55,7 +55,7 @@ module.exports = app => {
             arr.splice(index, 1)
           }
         })
-        User.findByIdAndUpdate(params, { tasks: data.tasks }, (err, data) => {
+        User.findByIdAndUpdate(params, { tasks: data.tasks }, { new: true }, (err, data) => {
           if (err) {
             cb(err)
             return
