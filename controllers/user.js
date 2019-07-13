@@ -5,11 +5,6 @@ import define from '../define'
 module.exports = app => {
   return {
     save: (req, res) => {
-      // verifica se os campos foram digitados
-      if (!req.body.name || !req.body.email || !req.body.password || !req.body.repassword) {
-        res.status(401).send('Dados incompletos')
-        return
-      }
       // verifica se as senhas são iguais
       if (req.body.password !== req.body.repassword) {
         res.status(401).send('Senhas diferentes')
@@ -21,6 +16,8 @@ module.exports = app => {
           req.body.password = hash
           delete req.body.repassword
           // importar model
+          req.body.avatar = req.file.destination + '/' + req.file.filename
+          delete req.file
           app.models.user.register(req.body, (err, data) => {
             if (err) {
               res.status(401).send('Erro: ' + err)
