@@ -8,8 +8,8 @@ module.exports = {
     body: Joi.object().keys({
       name: Joi.string().required(),
       email: Joi.string().email().trim().required(),
-      password: Joi.string().alphanum().min(4).max(12).required(),
-      repassword: Joi.string().alphanum().min(4).max(12).required()
+      password: Joi.string().min(4).max(12).required(),
+      repassword: Joi.string().min(4).max(12).required()
     })
   }),
   userAlterValidator: celebrate({

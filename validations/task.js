@@ -13,8 +13,12 @@ module.exports = {
   }),
   taskAlterValidator: celebrate({
     body: Joi.object().keys({
+      _id: Joi.objectId().optional(),
       title: Joi.string().optional(),
-      description: Joi.string().optional()
+      description: Joi.string().optional(),
+      status: Joi.string().optional(),
+      doneAt: Joi.string().optional(),
+      createdAt: Joi.string().optional()
     })
   })
 }

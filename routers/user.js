@@ -1,6 +1,6 @@
 import { verifyToken } from '../middleware/auth'
 import { userCreateValidator, userLoginValidator, idOptionalValidator, userAlterValidator, tokenValidator, idValidator } from '../validations/user'
-import upload from '../validations/upload'
+// import upload from '../validations/upload'
 
 module.exports = app => {
   /**
@@ -8,8 +8,7 @@ module.exports = app => {
    * VERB: POST
    * PUBLIC: true
    */
-  app.post('/user/register', upload.single('avatar') ,(req, res) => {
-    console.log(req.file)
+  app.post('/user/register', userCreateValidator, (req, res) => {
     app.controllers.user.save(req, res)
   })
   /**

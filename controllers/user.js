@@ -16,8 +16,8 @@ module.exports = app => {
           req.body.password = hash
           delete req.body.repassword
           // importar model
-          req.body.avatar = req.file.destination + '/' + req.file.filename
-          delete req.file
+          // req.body.avatar = req.file.destination + '/' + req.file.filename
+          // delete req.file
           app.models.user.register(req.body, (err, data) => {
             if (err) {
               res.status(401).send('Erro: ' + err)
