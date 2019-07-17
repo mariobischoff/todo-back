@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/server.js",
-    "build": "rm -rf dist & babel ./server.js --out-dir dist & babel ./src --out-dir dist/src --use_strict ",
+    "start": "rm -rf dist && npm run build && cd dist && node server.js",
+    "build": "rm -rf dist & babel ./server.js --out-dir dist & babel src --out-dir dist/src --use_strict ",
     "dev": "nodemon --exec babel-node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
