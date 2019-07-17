@@ -1,8 +1,8 @@
 import express from 'express'
 import consign from 'consign'
 import logger from 'morgan'
-import db from './database'
-import define from './define'
+import db from './src/database'
+import define from './src/define'
 import cors from 'cors'
 
 db
@@ -16,9 +16,9 @@ app.use(logger("dev"))
 app.use('/uploads', express.static('uploads'))
 
 consign()
-  .include('routers')
-  .then('controllers')
-  .then('models')
+  .include('src/routers')
+  .then('src/controllers')
+  .then('src/models')
   .into(app)
 
 app.listen(PORT, () => {

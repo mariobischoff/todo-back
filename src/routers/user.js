@@ -9,7 +9,7 @@ module.exports = app => {
    * PUBLIC: true
    */
   app.post('/user/register', userCreateValidator, (req, res) => {
-    app.controllers.user.save(req, res)
+    app.src.controllers.user.save(req, res)
   })
   /**
    * ROUTE: /user/login
@@ -17,7 +17,7 @@ module.exports = app => {
    * PUBLIC: true
    */
   app.post('/user/login', userLoginValidator, (req, res) => {
-    app.controllers.user.login(req, res)
+    app.src.controllers.user.login(req, res)
   })
   /**
    * ROUTE: /user/id?
@@ -25,7 +25,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.get('/user/:id?', tokenValidator, idOptionalValidator, verifyToken, (req, res) => {
-    app.controllers.user.list(req, res)
+    app.src.controllers.user.list(req, res)
   })
   /**
    * ROUTE: /user/id
@@ -33,7 +33,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.put('/user/:id', tokenValidator, userAlterValidator, idValidator, verifyToken, (req, res) => {
-    app.controllers.user.update(req, res)
+    app.src.controllers.user.update(req, res)
   })
   /**
    * ROUTE: /user/id
@@ -41,6 +41,6 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.delete('/user/:id', tokenValidator, idValidator, verifyToken, (req, res) => {
-    app.controllers.user.delete(req, res)
+    app.src.controllers.user.delete(req, res)
   })
 }

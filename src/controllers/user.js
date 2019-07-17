@@ -18,7 +18,7 @@ module.exports = app => {
           // importar model
           // req.body.avatar = req.file.destination + '/' + req.file.filename
           // delete req.file
-          app.models.user.register(req.body, (err, data) => {
+          app.src.models.user.register(req.body, (err, data) => {
             if (err) {
               res.status(401).send('Erro: ' + err)
               return
@@ -35,7 +35,7 @@ module.exports = app => {
         return
       }
       // verificar se existe o email cadastrado
-      app.models.user.getOne({ email: req.body.email }, (err, data) => {
+      app.src.models.user.getOne({ email: req.body.email }, (err, data) => {
         if (err) {
           res.send('Erro: ' + err)
           return
@@ -70,7 +70,7 @@ module.exports = app => {
         return
       }
       // importar o model
-      app.models.user.update({ _id: req.params.id }, req.body, (err, data) => {
+      app.src.models.user.update({ _id: req.params.id }, req.body, (err, data) => {
         if (err) {
           res.status(400).send('Erro: ' + err)
           return
@@ -84,7 +84,7 @@ module.exports = app => {
       // verificar se foi passado parametro
       if (req.params.id) {
         // importar model        
-        app.models.user.getOne({ _id: req.params.id }, (err, data) => {
+        app.src.models.user.getOne({ _id: req.params.id }, (err, data) => {
           if (err) {
             res.status(400).send('Erro: ' + err)
             return
@@ -94,7 +94,7 @@ module.exports = app => {
         })
       } else {
         // importar model
-        app.models.user.getAll((err, data) => {
+        app.src.models.user.getAll((err, data) => {
           if (err) {  
             res.status(400).send('Erro: ' + err)
             return
@@ -112,7 +112,7 @@ module.exports = app => {
         return
       }
       // importar model
-      app.models.user.delete({ _id: req.params.id }, (err, data) => {
+      app.src.models.user.delete({ _id: req.params.id }, (err, data) => {
         if (err) {
           res.status(400).send('Erro: ' + err)
           return

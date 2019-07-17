@@ -9,7 +9,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.post('/task', taskCreateValidator, verifyToken, (req, res) => {
-    app.controllers.task.save(req, res)
+    app.src.controllers.task.save(req, res)
   })
   /**
    * ROUTE: /task/:id?
@@ -17,7 +17,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.get('/task/:id?', verifyToken, (req, res) => {
-    app.controllers.task.list(req, res)
+    app.src.controllers.task.list(req, res)
   })
   /**
    * ROUTE: /task/:id
@@ -25,7 +25,7 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.put('/task/:id', tokenValidator, idValidator, taskAlterValidator, verifyToken, (req, res) => {
-    app.controllers.task.update(req, res)
+    app.src.controllers.task.update(req, res)
   })
   /**
    * ROUTE: /task/:id
@@ -33,6 +33,6 @@ module.exports = app => {
    * PUBLIC: false
    */
   app.delete('/task/:id', tokenValidator, idValidator, verifyToken, (req, res) => {
-    app.controllers.task.delete(req, res)
+    app.src.controllers.task.delete(req, res)
   })
 }
