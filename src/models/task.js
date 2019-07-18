@@ -5,41 +5,48 @@ module.exports = app => {
   return {
     // Adiciona tarefa
     addTask: (params, task, cb) => {
-      User.findOne(params, (err, data) => {
+      User.findOne(params, (err, user) => {
         if (err) {
           return cb(err)
         }
-        data.tasks.push(task)
-        User.findOneAndUpdate(params, { tasks: data.tasks }, { new: true }, (err, result) => {
+        user.tasks.push(task)
+        User.findOneAndUpdate(params, { tasks: user.tasks }, { new: true }, (err, result) => {
           if (err) {
             return cb(err)
           }
-          return cb(false, result)
+          return cb(false, task)
         })
       })
     },
     // Atualiza tarefa
     update: (params, idTask, body, cb) => {
-      User.findById(params, (err, data) => {
+      let newTask = null
+      User.findById(params, (err, user) => {
         if (err) {
           cb(err)
           return
         }
-        data.tasks.filter((task) => {
+        user.tasks.filter((task) => {
           if (task._id == idTask) {
-            if (body.status) {
-              task.status = body.status
+            body.status ? task.status = body.status : task.status = 'open'
+            if (body.title) {
+              task.title = body.title
             }
-            task.title = body.title
-            task.description = body.description
+            if (body.description) {
+              task.description = body.description
+            }
+            if (body.doneAt) {
+              task.doneAt = body.doneAt
+            }
+            newTask = task
           }
         })
-        User.findOneAndUpdate(params, { tasks: data.tasks }, { new: true }, (err, data) => {
+        User.findOneAndUpdate(params, { tasks: user.tasks }, { new: true }, (err, user) => {
           if (err) {
             cb(err)
             return
           }
-          cb(null, data)
+          cb(null, newTask)
         })
       })
     },
@@ -60,7 +67,7 @@ module.exports = app => {
             cb(err)
             return
           }
-          cb(null, data)
+          cb(null, idTask)
         })
       })
     },
