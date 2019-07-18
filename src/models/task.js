@@ -74,8 +74,7 @@ module.exports = app => {
         task = user.tasks.filter(task => {
           return task._id == idTask
         })
-        user.tasks = task
-        cb(null, user)
+        cb(null, task)
       })
     },
     // Recupera todas as tarefas
@@ -84,7 +83,7 @@ module.exports = app => {
         if (err) {
           return cb(err)
         }
-        cb(null, user)
+        cb(null, user.tasks)
       })
     }
   }
