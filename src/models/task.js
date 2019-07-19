@@ -10,11 +10,12 @@ module.exports = app => {
           return cb(err)
         }
         user.tasks.push(task)
-        User.findOneAndUpdate(params, { tasks: user.tasks }, { new: true }, (err, result) => {
+        User.findOneAndUpdate(params, { tasks: user.tasks }, { new: true }, (err, doc) => {
           if (err) {
             return cb(err)
           }
-          return cb(false, task)
+          let newTask = doc.tasks.pop()
+          return cb(false, newTask)
         })
       })
     },
