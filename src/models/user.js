@@ -9,7 +9,10 @@ module.exports = app => {
           cb(err)
           return
         }
-        cb(false, data)
+        let user = data
+        delete user.password
+        delete user.tasks
+        cb(false, user)
       })
     },
     // Recuperar um usuário pelo ID
@@ -19,7 +22,10 @@ module.exports = app => {
           cb(err)
           return
         }
-        cb(false, data)
+        let user = data
+        delete user.password
+        delete user.tasks
+        cb(false, user)
       })
     },
     // Listar todos usuários
@@ -29,6 +35,10 @@ module.exports = app => {
           cb(err)
           return
         }
+        data.filter((user) => {
+          delete user.tasks
+          delete user.password
+        })
         cb(false, data)
       })
     },
@@ -39,6 +49,8 @@ module.exports = app => {
           cb(err)
           return
         }
+        delete data.password
+        delete data.tasks
         cb(false, data)
       })
     },
