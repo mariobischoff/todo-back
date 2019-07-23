@@ -29,11 +29,6 @@ module.exports = app => {
       })
     },
     login: (req, res) => {
-      // verificar se os campos foram preenchidos
-      if (!req.body.email || !req.body.password) {
-        res.status(401).send('Falta dados')
-        return
-      }
       // verificar se existe o email cadastrado
       app.src.models.user.getOne({ email: req.body.email }, (err, data) => {
         if (err) {
@@ -41,16 +36,19 @@ module.exports = app => {
           return
         }
         if (data) {
-          // verificar senha
+          // verificar senha        
           bcrypt.compare(req.body.password, data.password, (err, same) => {
             if (err) {
+              console.log(req.body)
+              console.log
               res.status(400).send('Erro: ' + err)
               return
             }
             if (same) {
               // gera o token
-              const token = jwt.sign({ sub: data._id }, define.SHA, { expiresIn: 60 * 60 })
-              res.status(200).send({ token })
+              let user = { _id: data._id, name: data.name, email: data.email, createdAt: data.createdAt }
+              const token = jwt.sign({ sub: data._id }, define.SHA)
+              res.status(200).send({ token, user })
             } else {
               res.status(400).send('Senha invalida')
             }

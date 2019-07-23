@@ -9,9 +9,7 @@ module.exports = app => {
           cb(err)
           return
         }
-        let user = data
-        delete user.password
-        delete user.tasks
+        let user = { _id: data._id, name: data.name, email: data.email, createdAt: data.createdAt }
         cb(false, user)
       })
     },
@@ -22,10 +20,7 @@ module.exports = app => {
           cb(err)
           return
         }
-        let user = data
-        delete user.password
-        delete user.tasks
-        cb(false, user)
+        cb(false, data)
       })
     },
     // Listar todos usuários
